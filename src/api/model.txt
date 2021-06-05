@@ -1,0 +1,169 @@
+//Require Mongoose
+const mongoose = require('mongoose');
+const ObjectId = require('mongodb').ObjectID;
+
+//Define a schema
+const Schema = mongoose.Schema;
+const Subject = new Schema({
+	name:String,
+	code:String,
+	isActive: {
+		type: Boolean,
+		default: true
+	},
+	createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+const Course = new Schema({
+	name:String,
+	subjects:[{
+		name:String,
+		subjectId:ObjectId
+	}],
+	instituteId:ObjectId,
+	batchsize:Number,
+	faculties:[{
+		facultyName:String,
+		subjectName:String,
+		facultyId:ObjectId
+	}],
+	isActive: {
+		type: Boolean,
+		default: true
+	},
+	createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
+});
+const Faculty = new Schema({
+	name:String,
+	subjectId:ObjectId,
+	institutes:[{
+		name:String,
+		instituteId:ObjectId
+	}],
+	qualification:[{
+		degreeName:String,
+		passingYear:String,
+		grade:String
+	}],
+	experiences:[{
+		InstitutionName:String,
+		from:String,
+		to:String,
+		isCurrent:Boolean
+	}],
+	isActive: {
+		type: Boolean,
+		default: true
+	},
+	createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
+});
+const Institute = new Schema({
+	name:String,
+	address:{
+		line1:String,
+		street:String,
+		city:String,
+		state:String,
+		pincode:String,
+		country:String
+	},
+	licenceNo:String,
+	licenceYear:String,
+	courses:[{
+		name:String,
+		batchsize:Number,
+		courseFee: Number,
+		duration:Number,
+		courseId:ObjectId
+	}],
+	faculties:[{
+		facultyName:String,
+		courseName:String,
+		subjectName:String,
+		facultyCostPerClass:Number,
+		facultyId:ObjectId
+	}],
+	isActive: {
+		type: Boolean,
+		default: true
+	},
+	createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
+});
+const Student = new Schema({
+	name:String,
+	dob:Date,
+	mobile:Number,
+	permanentAddress:{
+		line1:String,
+		street:String,
+		city:String,
+		state:String,
+		pincode:String,
+		isCurrentAddress:Boolean
+	},
+	currentAddress:{
+		line1:String,
+		street:String,
+		city:String,
+		state:String,
+		pincode:String
+	},
+	fatherName:String,
+	fathersOccupation:String,
+	fatherMobile:Number,
+	motherName:String,
+	mothersOccupation:String,
+	motherMobile:Number,
+	instituteId:ObjectId,
+	institutionName:String,
+	courseName:String,
+	courseId:ObjectId,
+	enrolmentStartDate:Date,
+	enrolmentEndDate:Date,
+	isEnrolled:Boolean,
+	isActive: {
+		type: Boolean,
+		default: true
+	},
+	createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
+});
+
+module.exports.Subject = mongoose.model('Subject', Subject);
+module.exports.Course = mongoose.model('Course', Course);
+module.exports.Faculty = mongoose.model('Faculty', Faculty);
+module.exports.Institute = mongoose.model('Institute', Institute);
+module.exports.Student = mongoose.model('Student', Student);
